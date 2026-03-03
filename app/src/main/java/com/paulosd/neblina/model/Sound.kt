@@ -1,9 +1,14 @@
 package com.paulosd.neblina.model
 
-import com.paulosd.neblina.R
+enum class SoundCategory(val displayName: String) {
+    NATUREZA("Natureza"),
+    CHUVA("Chuva"),
+    RUIDO_BRANCO("Ruído Branco")
+}
 
 data class Sound(
     val id: Int,
     val name: String,
+    val category: SoundCategory,
     val rawResId: Int
 )
