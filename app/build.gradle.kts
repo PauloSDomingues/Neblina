@@ -58,4 +58,5 @@ dependencies {
 
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.2.0")
+    testImplementation(kotlin("test"))
 }

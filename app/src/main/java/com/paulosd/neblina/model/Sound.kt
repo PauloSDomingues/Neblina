@@ -3,6 +3,7 @@ package com.paulosd.neblina.model
 enum class SoundCategory(val displayName: String) {
     NATUREZA("Natureza"),
     CHUVA("Chuva"),
+    VENTO("Sopro de Vento"),
     RUIDO_BRANCO("Ruído Branco")
 }
 
