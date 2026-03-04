@@ -8,7 +8,6 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.RawResourceDataSource
 import androidx.media3.exoplayer.ExoPlayer
 
-
 class AudioPlayerManager(
     private val context: Context
 ) {
@@ -16,7 +15,7 @@ class AudioPlayerManager(
     private var player: ExoPlayer? = null
 
     @OptIn(UnstableApi::class)
-    fun start(soundResId: Int) {
+    fun start(soundResId: Int, volume: Float = 1f) {
         if (player == null) {
             player = ExoPlayer.Builder(context).build()
         }
@@ -28,9 +27,14 @@ class AudioPlayerManager(
         player?.apply {
             setMediaItem(mediaItem)
             repeatMode = Player.REPEAT_MODE_ONE
+            this.volume = volume.coerceIn(0f, 1f)
             prepare()
             play()
         }
+    }
+
+    fun setVolume(volume: Float) {
+        player?.volume = volume.coerceIn(0f, 1f)
     }
 
     fun stop() {

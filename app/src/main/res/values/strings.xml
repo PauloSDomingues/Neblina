@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Neblina</string>
+    <string name="timer_mode_sleep">Encerrar por Timer</string>
+    <string name="timer_mode_pomodoro">Pomodoro</string>
+
+    <string name="pomodoro_phase_idle">Parado</string>
+    <string name="pomodoro_phase_focus">Foco Ativado</string>
+    <string name="pomodoro_phase_short_break">Pausa Curta</string>
+    <string name="pomodoro_phase_long_break">Pausa Longa</string>
+    <string name="pomodoro_phase_awaiting_next_cycle">Aguardando próximo ciclo</string>
 </resources>
