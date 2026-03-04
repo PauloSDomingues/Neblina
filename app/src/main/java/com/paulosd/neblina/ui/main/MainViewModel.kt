@@ -27,11 +27,21 @@ class MainViewModel : ViewModel() {
     val uiState: StateFlow<MainUiState> = _uiState
 
     fun togglePlayback() {
-        _uiState.update { it.copy(isPlaying = !it.isPlaying) }
+        _uiState.update { current ->
+            val nowPlaying = !current.isPlaying
+            current.copy(
+                isPlaying = nowPlaying,
+                sleepTimerRemainingSeconds = if (nowPlaying && current.selectedSleepTimerMinutes != null) {
+                    current.selectedSleepTimerMinutes * 60
+                } else {
+                    null
+                }
+            )
+        }
     }
 
     fun stopPlayback() {
-        _uiState.update { it.copy(isPlaying = false) }
+        _uiState.update { it.copy(isPlaying = false, sleepTimerRemainingSeconds = null) }
     }
 
     fun selectCategory(category: SoundCategory) {
@@ -41,7 +51,8 @@ class MainViewModel : ViewModel() {
                 availableSounds = sounds,
                 selectedCategory = category,
                 selectedSound = sounds.firstOrNull(),
-                isPlaying = false
+                isPlaying = false,
+                sleepTimerRemainingSeconds = null
             )
         }
     }
@@ -50,9 +61,40 @@ class MainViewModel : ViewModel() {
         _uiState.update {
             it.copy(
                 selectedSound = sound,
-                isPlaying = false
+                isPlaying = false,
+                sleepTimerRemainingSeconds = null
             )
         }
+    }
+
+    fun selectSleepTimer(minutes: Int?) {
+        _uiState.update {
+            it.copy(
+                selectedSleepTimerMinutes = minutes,
+                sleepTimerRemainingSeconds = if (it.isPlaying && minutes != null) {
+                    minutes * 60
+                } else {
+                    null
+                }
+            )
+        }
+    }
+
+    fun tickSleepTimerAndCheckFinished(): Boolean {
+        var finished = false
+        _uiState.update {
+            val remaining = it.sleepTimerRemainingSeconds ?: return@update it
+            if (remaining <= 1) {
+                finished = true
+                it.copy(
+                    isPlaying = false,
+                    sleepTimerRemainingSeconds = null
+                )
+            } else {
+                it.copy(sleepTimerRemainingSeconds = remaining - 1)
+            }
+        }
+        return finished
     }
 
     fun toggleTheme() {

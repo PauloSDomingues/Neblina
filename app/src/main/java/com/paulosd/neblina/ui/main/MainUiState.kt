@@ -10,5 +10,7 @@ data class MainUiState(
     val availableCategories: List<SoundCategory> = emptyList(),
     val availableSounds: List<Sound> = emptyList(),
     val selectedCategory: SoundCategory? = null,
-    val selectedSound: Sound? = null
+    val selectedSound: Sound? = null,
+    val selectedSleepTimerMinutes: Int? = null,
+    val sleepTimerRemainingSeconds: Int? = null
 )
